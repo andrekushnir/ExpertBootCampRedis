@@ -1,0 +1,57 @@
+Estrutura de Dados:
+
+Avião: Id do Avião, modelo, Capacidade de Passageiros, Ano Fabricacao 
+Piloto: Id do Piloto, Nome, Idade, Licença
+Voo: Id do Voo, Numero do Voo, Data e Hora de partida, Origem, Destino
+Companhia Aerea: Id da Companhia, Nome
+
+
+
+Modelagem no Redis - Armazenando Avioes, Pilotos e Voos:
+
+Chave para Avião: plane:<plane_id>
+Chave para Piloto: pilot:<pilot_id>
+Chave para Voo: flight:<flight_id>
+Chave para Companhia Aerea: airline:<airline_id>
+
+SET airline:1 '{"id: 1, "name": "Gol" }'
+SET airline:2 '{"id: 2, "name": "Azul" }'
+SET airline:3 '{"id: 3, "name": "Latam" }'
+
+SET plane:101 '{"id": 101, "model": "Airbus A320", "passengers maximum capacity": 140, "manufactured": 2020, "airline_id": 1}' 
+SET plane:102 '{"id": 102, "model": "Boeing 747", "passengers maximum capacity": 467, "manufactured": 2011, "airline_id": 3}' 
+SET plane:103 '{"id": 103, "model": "Embraer E-jets", "passengers maximum capacity": 146, "manufactured": 2022, "airline_id": 2}' 
+
+
+SET pilot:1001 '{"id": 1001, "name": "Jose", "age": 35, "license": 1112}'
+SET pilot:1002 '{"id": 1002, "name": "rodrigo", "age": 45, "license": 3316}'
+SET pilot:1003 '{"id": 1003, "name": "manoel", "age": 24, "license": 2424}'
+
+SET flight:10001 '{"id": 10001, "number": 3312, "date start": "23-07-2024", "Time start": "13:30:00", "from": "Sao Paulo", "to": "Rio de Janeiro", "plane_id": 101 ,"pilot_id": 1001}'
+SET flight:10002 '{"id": 10002, "number": 4510, "date start": "23-07-2024", "Time start": "15:00:00", "from": "Recife", "to": "Sao Paulo", "plane_id": 102 ,"pilot_id": 1002}'
+SET flight:10003 '{"id": 10003, "number": 4530, "date start": "23-07-2024", "Time start": "18:00:00", "from": "Sao Paulo", "to": "Recife", "plane_id": 102 ,"pilot_id": 1003}'
+SET flight:10004 '{"id": 10004, "number": 6666, "date start": "23-07-2024", "Time start": "20:00:00", "from": "Manaus", "to": "Salvador", "plane_id": 103 ,"pilot_id": 1001}'
+
+Recuperando os Dados:
+
+Recuperar dados de avioes, Adicionar, remover
+
+GET plane:101
+
+LPUSH plane:104 '{"id": 104, "model": "Embraer E-jets", "passengers maximum capacity": 146, "manufactured": 2022, "airline_id": 2}' 
+LPOP plane:104 
+
+Recuperar dados de pilotos, Adicionar, remover
+
+GET pilot:1001
+
+LPUSH pilot:1004 '{"id": 1004, "name": "parker", "age": 33, "license": 0001}'
+LPOP pilot:1004 
+
+
+Recuperar dados de Voos, Adicionar, remover
+
+GET flight:10001
+
+LPUSH flight:10005 '{"id": 10005, "number": 6666, "date start": "23-07-2024", "Time start": "21:00:00", "from": "Sao Paulo", "to": "Curitiba", "plane_id": 101 ,"pilot_id": 1001}'
+LPOP flight:10005
